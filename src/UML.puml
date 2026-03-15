@@ -1,0 +1,30 @@
+@startuml
+
+class PersonalInformation {
+
+    - String name
+    - String address
+    - String nationality
+    - String id
+
+    + PersonalInformation()
+    + PersonalInformation(String name, String address, String nationality, String id)
+
+    + void setName(String name)
+    + void setAddress(String address)
+    + void setNationality(String nationality)
+    + void setId(String id)
+
+    + String getName()
+    + String getAddress()
+    + String getNationality()
+    + String getId()
+
+    + String toString()
+}
+
+
+class Person{
+}
+
+@enduml
