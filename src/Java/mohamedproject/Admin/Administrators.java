@@ -1,6 +1,15 @@
+package Java.mohamedproject.Admin;
+
+import Java.mohamedproject.Department.Department;
+import Java.mohamedproject.Doctor.Doctor;
+import Java.mohamedproject.Employee.Employee;
+import Java.mohamedproject.Nurse.Nurse;
+import Java.mohamedproject.Reception.Reception;
+
 import java.util.ArrayList;
 
-public class Administrators  extends Employee{
+
+public class Administrators  extends Employee {
 
     private Department department;
     private Doctor doctor;
@@ -55,7 +64,7 @@ public class Administrators  extends Employee{
         if (dept == null){
             departments.add(department);
         }else {
-            throw new Exception("Department Was Exist !! ");
+            throw new Exception("Java.mohamedproject.Department.Department Was Exist !! ");
         }
 
     }

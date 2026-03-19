@@ -1,19 +1,28 @@
-public class PersonalInformation {
+package Java.mohamedproject.Person;
+
+public abstract class  Person {
+
+
+    //private  PersonalInformation personalInformation;
 
     private String name;
     private String address;
     private String nationality;
     protected String id;
 
-    public PersonalInformation(){
+
+    public Person(){
+        //this.personalInformation = new PersonalInformation();
         this.name = "Mohamed ";
         this.address = "Alex";
         this.nationality = "Egyptian";
-        this.id = "000"; 
+        this.id = "000";
+
     }
 
+    public Person(String name , String address , String nationality, String id){
+//        this.personalInformation = new PersonalInformation(name ,address , nationality, id);
 
-    public  PersonalInformation(String name , String address , String nationality, String id){
         this.name = name;
         this.address = address;
         this.nationality = nationality;
@@ -54,7 +63,7 @@ public class PersonalInformation {
 
     @Override
     public String toString() {
-        return "PersonalInformation{" +
+        return "Java.mohamedproject.Person.Person{" +
                 "name='" + name + '\'' +
                 ", address='" + address + '\'' +
                 ", nationality='" + nationality + '\'' +

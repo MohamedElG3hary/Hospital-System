@@ -1,4 +1,6 @@
-import java.util.ArrayList;
+package Java.mohamedproject.Order;
+
+import Java.mohamedproject.Patient.Patient;
 
 public class Order {
 
@@ -30,9 +32,11 @@ public class Order {
 
     @Override
     public String toString() {
-        return "Order{" +
+        return "Java.mohamedproject.Order.Order{" +
                 "patient=" + patient.toString() +
                 ", value=" + value +
                 '}';
     }
+
+
 }

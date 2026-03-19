@@ -1,7 +1,11 @@
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.Queue;
+package Java.mohamedproject.Reception;
+
+import Java.mohamedproject.Employee.Employee;
+import Java.mohamedproject.Order.Order;
+import Java.mohamedproject.SortValues.SortByValue;
+import Java.mohamedproject.Patient.Patient;
+
+import java.util.*;
 
 public class Reception extends Employee {
 
@@ -29,6 +33,7 @@ public class Reception extends Employee {
     public void addOrderedPatient(Order order){
             orders.addLast(order);
             Collections.sort(orders, new SortByValue());
+
 
 
     }

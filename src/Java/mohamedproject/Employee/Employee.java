@@ -1,3 +1,8 @@
+package Java.mohamedproject.Employee;
+
+import Java.mohamedproject.Department.Department;
+import Java.mohamedproject.Person.Person;
+
 public abstract class Employee extends Person {
     protected Department department;
     protected double salary ;
@@ -37,7 +42,7 @@ public abstract class Employee extends Person {
 
     @Override
     public String toString() {
-        return "Employee{" +
+        return "Java.mohamedproject.Employee.Employee{" +
                 super.toString()+
                 "salary=" + salary +
                 ", workHours=" + workHours +

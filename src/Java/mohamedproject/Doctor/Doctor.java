@@ -1,3 +1,8 @@
+package Java.mohamedproject.Doctor;
+
+import Java.mohamedproject.Department.Department;
+import Java.mohamedproject.Employee.Employee;
+
 public class Doctor extends Employee {
 
     public Doctor(){

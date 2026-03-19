@@ -1,3 +1,7 @@
+package Java.mohamedproject.Department;
+
+import Java.mohamedproject.Employee.Employee;
+
 import java.util.ArrayList;
 
 public class Department {
@@ -48,7 +52,7 @@ public class Department {
 
     @Override
     public String toString() {
-        return "Department{" +
+        return "Java.mohamedproject.Department.Department{" +
                 "departmentName='" + departmentName + '\'' +
                 ", listEmployee=" + listEmployee +
                 ", numberOfEmployees=" + numberOfEmployees +

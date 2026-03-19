@@ -1,4 +1,9 @@
-public class Nurse extends  Employee {
+package Java.mohamedproject.Nurse;
+
+import Java.mohamedproject.Department.Department;
+import Java.mohamedproject.Employee.Employee;
+
+public class Nurse extends Employee {
     public Nurse(){
         super();
         this.department = new Department("!!!");

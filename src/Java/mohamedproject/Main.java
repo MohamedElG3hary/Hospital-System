@@ -1,4 +1,15 @@
+package Java.mohamedproject;
 
+
+
+import Java.mohamedproject.Admin.Administrators;
+import Java.mohamedproject.Department.Department;
+import Java.mohamedproject.Doctor.Doctor;
+import Java.mohamedproject.Nurse.Nurse;
+import Java.mohamedproject.Order.Order;
+import Java.mohamedproject.Patient.Patient;
+import Java.mohamedproject.Reception.Reception;
+import Java.mohamedproject.SearchValues.Search;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -42,7 +53,7 @@ public class Main {
 
     public static void patientManagement() {
         System.out.println("=============================");
-        System.out.println(" Patient Management : ");
+        System.out.println("--- Patient Management : ---");
         System.out.println("1 - Already Registered  .");
         System.out.println("2 - Don't Registered Before .");
         System.out.println("3 - Show All Patients .");
@@ -54,7 +65,7 @@ public class Main {
         System.out.println("=============================");
         System.out.println(" Patient Management - Existing Patient : ");
         System.out.println("1 - Search Your Patient By Id : ");
-        System.out.println("2 - Take an Order.");
+        System.out.println("2 - Take an Order.Order.");
         System.out.println("3 - Show Orders.");
         System.out.println("0 - Exit .");
         System.out.println("=============================");
@@ -73,7 +84,7 @@ public class Main {
             choice = sc.nextInt();
             switch (choice) {
                 case 1 -> {
-                    System.out.print("Enter Your  Patient Id : ");
+                    System.out.print("Enter Your Patient Id : ");
                     int id = sc.nextInt();
 
                     if (reception.getPatients().isEmpty()) {
@@ -140,7 +151,7 @@ public class Main {
 
 
                 case 0 -> {
-                    System.out.println(" New  Patient Menu Closing .");
+                    System.out.println(" New Patient Menu Closing .");
                 }
                 default -> {
 
@@ -166,6 +177,7 @@ public class Main {
     public static void patientOperation() {
         ArrayList<Patient> patients = reception.getPatients();
         ArrayList<Integer> ids = new ArrayList<>();
+
         int selectMode;
         do {
 

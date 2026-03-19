@@ -1,6 +1,10 @@
+package Java.mohamedproject.Patient;
+
+import Java.mohamedproject.Person.Person;
+
 import java.util.ArrayList;
 
-public class Patient extends Person{
+public class Patient extends Person {
 
     private String disease;
     private String bloodType;
@@ -39,7 +43,7 @@ public class Patient extends Person{
 
     @Override
     public String toString() {
-        return "Patient{" +
+        return "Java.mohamedproject.Patient.Patient{" +
                 super.toString() +
                 "disease='" + disease + '\'' +
                 ", bloodType='" + bloodType + '\'' +
