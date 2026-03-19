@@ -1,7 +1,10 @@
+import java.util.ArrayList;
+
 public class Patient extends Person{
 
     private String disease;
     private String bloodType;
+    private ArrayList<Integer> orders;
 
 
 
@@ -21,9 +24,10 @@ public class Patient extends Person{
 
     }
 
-//    public String getId(){
-//        return 1;
-//    }
+
+
+
+
 
     public String getDisease() {
         return disease;

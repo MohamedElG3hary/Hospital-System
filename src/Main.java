@@ -1,4 +1,5 @@
-import java.lang.annotation.ElementType;
+
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -44,13 +45,14 @@ public class Main {
         System.out.println(" Patient Management : ");
         System.out.println("1 - Already Registered  .");
         System.out.println("2 - Don't Registered Before .");
+        System.out.println("3 - Show All Patients .");
         System.out.println("0 - Exit .");
         System.out.println("=============================");
     }
 
-    public static void  patientAlreadyMenu() {
+    public static void patientAlreadyMenu() {
         System.out.println("=============================");
-        System.out.println(" Patient Management : ");
+        System.out.println(" Patient Management - Existing Patient : ");
         System.out.println("1 - Search Your Patient By Id : ");
         System.out.println("2 - Take an Order.");
         System.out.println("3 - Show Orders.");
@@ -58,83 +60,87 @@ public class Main {
         System.out.println("=============================");
     }
 
-    public static int binarySearch(int target , ArrayList<Integer> collections , int l , int r){
-        while (l <= r){
 
-            int m = (l + r) / 2;
+    public static void patientAlreadyOperation(ArrayList<Patient> arrayList, ArrayList<Integer> ids) {
+        ArrayList<Patient> patients = arrayList;
+        //int numberOfPatient = reception.getNumberOfPatients();
 
-            if (collections.get(m) == target ) {
-                return m;
-
-            }
-            else if (collections.get(m) > (target)) {
-                r = m - 1;
-
-            }
-            else {
-                l = m + 1;
-            }
-        }
-        return -1;
-
-    }
-
-    public static void patientAlreadyOperation() {
-        int choice ;
+        ArrayList<Order> orders = reception.getOrders();
+        int choice;
         do {
             patientAlreadyMenu();
             System.out.print("Enter Your Choice : ");
             choice = sc.nextInt();
-            switch (choice){
-                case 1 ->{
-                    System.out.println("Enter Your  Patient Id : ");
+            switch (choice) {
+                case 1 -> {
+                    System.out.print("Enter Your  Patient Id : ");
                     int id = sc.nextInt();
 
-                    if(reception.getPatients().isEmpty()){
-                        // Add New Patient Flow .
-                    }else{
-                        Patient patient = new Patient();
+                    if (reception.getPatients().isEmpty()) {
+                        System.out.println("Patient Cannot be found ..");
+                        createGuestData(1, ids);
+                    } else {
 
-                        ArrayList<Patient>patients = reception.getPatients();
-                        int numberOfPatient = reception.getNumberOfPatients();
-                        ArrayList<Integer> ids = new ArrayList<>(numberOfPatient);
 
-                        for (int i = 0; i < numberOfPatient; i++) {
-                            ids.add(Integer.getInteger(patients.get(i).getId()));
-                        }
-                        int location = binarySearch(id,ids,0,numberOfPatient);
-                        if (location!=-1){
-                            System.out.println("Your Patient is " + patients.get(location).toString() );
-                        }else{
+                        int location = Search.binarySearch(id, ids, 0, patients.size() - 1);
+                        if (location != -1) {
+                            System.out.println("Your Patient is " + patients.get(location).toString());
+                        } else {
                             System.out.println("Patient is not Exist , Please Enter your Data .");
                         }
 
                     }
                 }
-                case 2 ->{
-                    System.out.print("Enter Your Order : ");
+                case 2 -> {
+                    System.out.println(" Order Process : ");
+                    System.out.println("Enter Patient Id him takes order : ");
+                    int id = sc.nextInt();
+                    System.out.println("Enter Order Value : ");
                     int order = sc.nextInt();
-                    ArrayList<Integer> orders = new ArrayList<>(10);
 
-                    if (orders.isEmpty()){
-                        orders.add(order);
-                        System.out.println("Order Added Successfully !!");
-                    }else{
-                        int searchStatus = binarySearch(order,orders,0, orders.size());
 
-                        if(searchStatus == -1){
-                            orders.set(searchStatus,order);
-                            System.out.println(" Order Added Successfully !! ");
-                        }else {
-                            System.out.println(" Exist Order in : " + searchStatus + ", Please Take another Order !! ");
-                        }
+                    int location = Search.binarySearch(id, ids, 0, patients.size() - 1);
+                    if (location != -1) {
+                        Order obj = new Order(order, patients.get(location));
+                        reception.addOrderedPatient(obj);
+                    } else {
+                        System.out.println("Please Check for Patient Details !!! ");
                     }
 
 
-
+                }
+                case 3 -> {
+                    System.out.println(orders);
                 }
                 case 0 -> {
                     System.out.println(" Already Patient Menu Closing .");
+                }
+                default -> {
+                    System.out.println("Invalid Choice ... ");
+                }
+            }
+
+
+        } while (choice != 0);
+
+
+    }
+
+
+    public static void newPatientOperation(ArrayList<Integer> idPatient) {
+        int newChoice;
+        do {
+            newPatientMenu();
+            System.out.print("Enter Your Choice : ");
+            newChoice = sc.nextInt();
+            switch (newChoice) {
+                case 1 -> {
+                    createGuestData(1, idPatient);
+                }
+
+
+                case 0 -> {
+                    System.out.println(" New  Patient Menu Closing .");
                 }
                 default -> {
 
@@ -142,16 +148,14 @@ public class Main {
             }
 
 
-        }while (choice!=0);
-
-
+        } while (newChoice != 0);
 
 
     }
 
     public static void newPatientMenu() {
         System.out.println("=============================");
-        System.out.println(" Patient Management : ");
+        System.out.println(" Patient Management - New Patient : ");
         System.out.println("1 - Enter Data Of Patient  .");
         System.out.println("2 - Take an Order.");
         System.out.println("0 - Exit .");
@@ -159,30 +163,40 @@ public class Main {
     }
 
 
+    public static void patientOperation() {
+        ArrayList<Patient> patients = reception.getPatients();
+        ArrayList<Integer> ids = new ArrayList<>();
+        int selectMode;
+        do {
 
+            patientManagement();
+            System.out.print(" Select Status Your Patient : ");
+            selectMode = sc.nextInt();
 
-    public static void patientOperation(){
-        patientManagement();
-        System.out.print(" Select Status Your Patient : ");
-        int selectMode = sc.nextInt();
+            switch (selectMode) {
+                case 1 -> {
+                    patientAlreadyOperation(patients, ids);
+                }
+                case 2 -> {
+                    newPatientOperation(ids);
+                }
+                case 3 -> {
+                    System.out.println("All Patients Has Been Existing :");
+                    System.out.println(patients);
+                }
 
-        switch (selectMode){
-            case 1 -> {
-               patientAlreadyOperation();
+                default -> {
+                    System.out.println(" Invalid Patient  Status !!");
+                }
             }
-            case 2 -> {
-                newPatientMenu();
-            }
-
-            default -> {
-                System.out.println(" Invalid Patient  Status !!");
-            }
-        }
+        } while (selectMode != 0);
 
 
     }
 
-    public static GuestData createGuestData() {
+    public static void createGuestData(int guestChoice, ArrayList<Integer> idPatient) {
+
+
         System.out.println("Enter Guest Details:");
         sc.nextLine();
         System.out.print("Name: ");
@@ -197,28 +211,46 @@ public class Main {
         System.out.print("ID: ");
         String id = sc.nextLine();
 
-        System.out.println("Disease : ");
-        String disease = sc.nextLine();
+        idPatient.add(Integer.parseInt(id));
 
-        System.out.println("Blood Type  :");
-        String bloodType = sc.nextLine();
 
-        GuestData data = new GuestData();
-        data.name = name;
-        data.address = address;
-        data.nationality = nationality;
-        data.id = id;
-        data.disease = disease;
-        data.bloodType = bloodType;
-        return data;
+        switch (guestChoice) {
+
+
+            case 1 -> {
+                System.out.print("Disease : ");
+                String disease = sc.nextLine();
+
+                System.out.print("Blood Type : ");
+                String bloodType = sc.nextLine();
+
+                addPatient(name, address, nationality, id, disease, bloodType);
+
+            }
+
+            default -> {
+                System.out.println("InValid Input ...");
+
+
+            }
+
+
+        }
+
     }
 
-    public static void addDoctor(String name, String address, String nationality,String  id, double salary, int workHours,int experienceYears, Department department){
+    public static void addPatient(String name, String address, String nationality, String id, String disease, String bloodType) {
+        Patient patient = new Patient(name, address, nationality, id, disease, bloodType);
+        reception.addPatient(patient);
+    }
+
+    public static void addDoctor(String name, String address, String nationality, String id, double salary, int workHours, int experienceYears, Department department) {
         Doctor doctor = new Doctor(name, address, nationality, id, salary, workHours, experienceYears, department);
         admin.addMedicalStaff(doctor);
         doctor.getDepartment().addEmployee(doctor);
     }
-    public static void addNurse(String name, String address, String nationality,String  id, double salary, int workHours,int experienceYears,Department department){
+
+    public static void addNurse(String name, String address, String nationality, String id, double salary, int workHours, int experienceYears, Department department) {
         Nurse nurse = new Nurse(name, address, nationality, id, salary, workHours, experienceYears, department);
         admin.addMedicalStaff(nurse);
         nurse.getDepartment().addEmployee(nurse);
@@ -260,7 +292,7 @@ public class Main {
                 switch (medicalChoice) {
 
                     case 'A' -> {
-                       addDoctor(name, address, nationality, id, salary, workHours, experienceYears, department);
+                        addDoctor(name, address, nationality, id, salary, workHours, experienceYears, department);
                     }
                     case 'B' -> {
                         addNurse(name, address, nationality, id, salary, workHours, experienceYears, department);
@@ -270,7 +302,7 @@ public class Main {
                     }
 
                 }
-                /// //
+
 
             }
             case 2 -> {
@@ -353,6 +385,7 @@ public class Main {
 
     public static void receptionOperation() {
         int receptionChoice;
+
         do {
             receptionMenu();
             System.out.print("Select your Operation : ");

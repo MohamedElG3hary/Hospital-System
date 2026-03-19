@@ -1,10 +1,12 @@
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.Queue;
 
 public class Reception extends Employee {
 
     private ArrayList<Patient> patients  = new ArrayList <>();
+    private ArrayList<Order> orders  = new ArrayList <>();
 
     private static int numberOfPatients;
 
@@ -22,6 +24,22 @@ public class Reception extends Employee {
         patients.add(patient);
         numberOfPatients++;
     }
+
+
+    public void addOrderedPatient(Order order){
+            orders.addLast(order);
+            Collections.sort(orders, new SortByValue());
+
+
+    }
+
+    public ArrayList<Order> getOrders (){
+        return orders;
+    }
+
+
+
+
 
     public int getNumberOfPatients() {
         return numberOfPatients;
