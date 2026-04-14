@@ -1,30 +1,286 @@
 @startuml
 
-class PersonalInformation {
 
-    - String name
-    - String address
-    - String nationality
-    - String id
+enum Departments {
+    ER,
+    CAR,
+    PED,
+    ORT,
+    DER,
+    NEU,
+    ONC,
+    ENT,
+    OPH,
+    GAS
 
-    + PersonalInformation()
-    + PersonalInformation(String name, String address, String nationality, String id)
 
+}
+
+enum Nationality {
+    EG,
+    US,
+    FR,
+    DE,
+    UK,
+    CA,
+    AU,
+    IN,
+    JP,
+    BR;
+
+}
+ enum PersonCity {
+    CAIRO,
+    ALEXA,
+    PARIS,
+    LONDO,
+    NEWYO,
+    TOKYO,
+    BERLI,
+    MADRI,
+    OTTAW,
+    CANBR;
+
+}
+
+ abstract class  Person  implements Serializable {
+    - String name;
+    - String address;
+    - String nationality;
+    - String id;
+
+    + Person()
+    + Person(String name , String address , String nationality, String id)
+     + static  <T extends Enum<T>> boolean isValidValue(Class<T> enumType, String input)
     + void setName(String name)
     + void setAddress(String address)
     + void setNationality(String nationality)
     + void setId(String id)
-
     + String getName()
     + String getAddress()
     + String getNationality()
     + String getId()
-
+    @Override
     + String toString()
 }
 
 
-class Person{
+ abstract class Employee extends Person  implements Serializable {
+    # Department department;
+    # double salary ;
+    # int workHours;
+    # int experienceYears;
+    - String password;
+
+    + Employee()
+    +  Employee (String name , String address , String nationality, String id , double salary , int workHours , int experienceYears )
+     + void setPassword(String password)
+    + double getSalary()
+    + int getWorkHours()
+    + int getExperienceYears()
+    + Department getDepartment()
+    @Override
+    + String toString()
 }
+
+ class Doctor extends Employee implements Serializable {
+    + Doctor()
+    +  Doctor (String name , String address , String nationality, String id, double salary , int workHours , int experienceYears, Department department)
+    @Override
+    + String toString()
+}
+
+
+ class Nurse extends Employee implements Serializable {
+    + Nurse()
+    +  Nurse (String name , String address , String nationality, String id, double salary , int workHours , int experienceYears, Department department)
+
+    @Override
+    + String toString()
+}
+
+
+
+ class Department implements Serializable {
+
+    - String departmentName;
+    - ArrayList<Employee>listEmployee = new ArrayList<>();
+    - int numberOfEmployees;
+
+    + Department()
+
+    + Department(String departmentName )
+
+    + void addEmployee(Employee employee)
+
+    + String getDepartmentName()
+
+    + ArrayList<Employee> getListEmployee()
+
+    + int getNumberOfEmployees()
+    + void setDepartmentName(String departmentName)
+
+    + void setListEmployee(ArrayList<Employee> listEmployee)
+    + void setNumberOfEmployees(int numberOfEmployees)
+    @Override
+    + String toString()
+}
+
+
+
+ class Administrators  extends Employee  implements Serializable {
+
+    - Department department;
+    - Doctor doctor;
+    - Nurse nurse;
+    - int numberOfDoctorsAdded;
+    - int numberOfNursesAdded;
+    - ArrayList<Department> departments = new ArrayList<>();
+    - ArrayList<Reception> receptions = new ArrayList<>();
+    - ArrayList<Employee> listEmployee = new ArrayList<>();
+
+
+    + Administrators()
+
+    + Administrators(String name , String address , String nationality, String id, double salary , int workHours , int experienceYears)
+
+
+    - Department findDepartmentByName(String name)
+    + void addMedicalStaff(Employee employee)
+
+
+    + void addDepartment(Department department )throws Exception
+
+    + void addReception(Reception reception)
+    + ArrayList<Employee> getDoctors()
+
+    + int getNumberOfDoctors()
+    + int getNumberOfNursesAdded()
+
+    + ArrayList<Employee> KnowAllDoctors()
+    + ArrayList<Department>knowAllDepartment()
+    + ArrayList<Reception>getReceptions()
+    + ArrayList<Employee> getListEmployee()
+
+    @Override
+    + String toString()
+}
+
+
+ class Order   implements Serializable {
+   - Patient patient;
+    - int value;
+    + Order()
+    + Order(int value , Patient patient)
+    + void setValue(int value)
+    + int getValue()
+    @Override
+    + String toString()
+
+}
+
+
+class Patient extends Person  implements Serializable {
+
+    - String disease;
+    - String bloodType;
+    - ArrayList<Integer> orders;
+
+    + Patient()
+    + Patient(String name , String address , String nationality, String id ,String disease , String bloodType )
+    + String getDisease()
+    + String getBloodType()
+    @Override
+    + String toString()
+}
+
+
+
+ class Reception extends Employee  implements Serializable {
+
+    - ArrayList<Patient> patients  = new ArrayList <>();
+    - ArrayList<Order> orders  = new ArrayList <>();
+    - static int numberOfPatients;
+
+    + Reception()
+    + Reception(String name , String address , String nationality, String id , double salary , int workHours , int experienceYears )
+
+    + void addPatient(Patient patient)
+    + void addOrderedPatient(Order order)
+
+    + ArrayList<Order> getOrders ()
+    + int getNumberOfPatients()
+
+    + ArrayList<Patient>getPatients()
+    @Override
+    + String toString()
+}
+
+
+ class Search {
+    + static int binarySearch(int target, ArrayList<Integer> collections, int l, int r)
+
+}
+ class SortByValue implements Comparator<Order> {
+
+    + int compare(Order obj1 , Order obj2)
+}
+
+
+ interface HospitalRepository  {
+    +void addDoctor(Doctor doctor);
+    +ArrayList<Doctor> getAllDoctors();
+    +void addNurse(Nurse nurse);
+    +ArrayList<Nurse> getAllNurses();
+    +void addReception(Reception reception);
+    +ArrayList<Reception> getAllReceptions();
+    +void addDepartment(Department department);
+    +ArrayList<Department> getAllDepartments();
+    +Department findDepartmentByName(String name);
+    +void addPatient(Patient patient);
+    +ArrayList<Patient> getAllPatients();
+    +void save() throws Exception;
+    +void load() throws Exception;
+}
+
+
+
+ class FileHospitalRepository implements HospitalRepository, Serializable {
+    @Serial
+    - static final long serialVersionUID = 9L;
+    - List<Doctor> doctors = new ArrayList<>();
+    - List<Nurse> nurses = new ArrayList<>();
+    - List<Reception> receptions = new ArrayList<>();
+    - List<Department> departments = new ArrayList<>();
+    - List<Patient> patients = new ArrayList<>();
+
+}
+
+
+
+ class HospitalLogin {
+
+
+    + static boolean verifyUserLogin(Employee user, String filePath, String delimiter)
+
+
+    + static boolean loginSystemMenu(Employee user , String filePath)throws Exception
+
+
+}
+
+
+
+
+
+
+Department *- Employee
+Order *- Patient
+Department -- Administrators
+Reception o-- Patient
+
+
+
+
 
 @enduml

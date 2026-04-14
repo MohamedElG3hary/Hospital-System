@@ -11,8 +11,7 @@ public class Patient extends Person {
     private ArrayList<Integer> orders;
 
 
-
-    public Patient(){
+    public Patient() {
         super();
         this.disease = "Empty";
         this.bloodType = "NO DATA !!";
@@ -20,17 +19,13 @@ public class Patient extends Person {
 
     }
 
-    public Patient(String name , String address , String nationality, String id ,String disease , String bloodType ){
-        super(name ,  address ,  nationality, id);
+    public Patient(String name, String address, String nationality, String id, String disease, String bloodType) throws Exception {
+        super(name, address, nationality, id);
         this.disease = disease;
         this.bloodType = bloodType;
 
 
     }
-
-
-
-
 
 
     public String getDisease() {
@@ -43,7 +38,7 @@ public class Patient extends Person {
 
     @Override
     public String toString() {
-        return "Java.mohamedproject.Patient.Patient{" +
+        return "Patient{" +
                 super.toString() +
                 "disease='" + disease + '\'' +
                 ", bloodType='" + bloodType + '\'' +

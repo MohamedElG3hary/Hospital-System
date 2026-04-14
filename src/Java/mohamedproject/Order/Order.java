@@ -2,18 +2,23 @@ package Java.mohamedproject.Order;
 
 import Java.mohamedproject.Patient.Patient;
 
-public class Order {
+import java.io.Serial;
+import java.io.Serializable;
 
-   private Patient patient;
+
+public class Order implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 6L;
+    private Patient patient;
 
 
     private int value;
 
     public Order() {
-        this.value =-1;
+        this.value = -1;
     }
 
-    public Order(int value , Patient patient) {
+    public Order(int value, Patient patient) {
         this.value = value;
         this.patient = patient;
     }
@@ -26,8 +31,6 @@ public class Order {
     public int getValue() {
         return value;
     }
-
-
 
 
     @Override

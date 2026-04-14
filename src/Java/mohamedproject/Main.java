@@ -1,25 +1,38 @@
 package Java.mohamedproject;
 
 
-
 import Java.mohamedproject.Admin.Administrators;
 import Java.mohamedproject.Department.Department;
 import Java.mohamedproject.Doctor.Doctor;
+import Java.mohamedproject.Employee.Employee;
+import Java.mohamedproject.FileHospitalRepository.FileHospitalRepository;
+import Java.mohamedproject.HospitalRepository.HospitalRepository;
 import Java.mohamedproject.Nurse.Nurse;
 import Java.mohamedproject.Order.Order;
 import Java.mohamedproject.Patient.Patient;
 import Java.mohamedproject.Reception.Reception;
 import Java.mohamedproject.SearchValues.Search;
 
+import static LoginService.HospitalLogin.loginSystemMenu;
+
 import java.util.ArrayList;
+import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Scanner;
 
 
 public class Main {
+
     public static Scanner sc = new Scanner(System.in);
 
-    public static Administrators admin = new Administrators();
-    public static Reception reception = new Reception();
+    public static final Administrators admin = new Administrators();
+    public static final Reception reception = new Reception();
+
+    public static HospitalRepository repository;
+
+    public static String adminAccountFilePath = "src/resources/Admin Account.txt";
+    public static String receptionAccountFilePath = "src/resources/receptionAccounts.txt";
+
 
     public static void systemMenu() {
         System.out.println("=============================");
@@ -72,10 +85,7 @@ public class Main {
     }
 
 
-    public static void patientAlreadyOperation(ArrayList<Patient> arrayList, ArrayList<Integer> ids) {
-        ArrayList<Patient> patients = arrayList;
-        //int numberOfPatient = reception.getNumberOfPatients();
-
+    public static void patientAlreadyOperation(ArrayList<Patient> patients, ArrayList<Integer> ids) throws Exception {
         ArrayList<Order> orders = reception.getOrders();
         int choice;
         do {
@@ -87,7 +97,7 @@ public class Main {
                     System.out.print("Enter Your Patient Id : ");
                     int id = sc.nextInt();
 
-                    if (reception.getPatients().isEmpty()) {
+                    if (repository.getAllPatients().isEmpty()) {
                         System.out.println("Patient Cannot be found ..");
                         createGuestData(1, ids);
                     } else {
@@ -120,15 +130,11 @@ public class Main {
 
 
                 }
-                case 3 -> {
-                    System.out.println(orders);
-                }
-                case 0 -> {
-                    System.out.println(" Already Patient Menu Closing .");
-                }
-                default -> {
-                    System.out.println("Invalid Choice ... ");
-                }
+                case 3 -> System.out.println(orders);
+
+                case 0 -> System.out.println(" Already Patient Menu Closing .");
+
+                default -> System.out.println("Invalid Choice ... ");
             }
 
 
@@ -138,24 +144,21 @@ public class Main {
     }
 
 
-    public static void newPatientOperation(ArrayList<Integer> idPatient) {
+    public static void newPatientOperation(ArrayList<Integer> idPatient) throws Exception {
         int newChoice;
         do {
             newPatientMenu();
             System.out.print("Enter Your Choice : ");
             newChoice = sc.nextInt();
             switch (newChoice) {
-                case 1 -> {
-                    createGuestData(1, idPatient);
-                }
+                case 1 -> createGuestData(1, idPatient);
 
 
                 case 0 -> {
+                    System.out.println("GO TO EXISTING MENU TO COMPLETE OPERATION !!!!");
                     System.out.println(" New Patient Menu Closing .");
                 }
-                default -> {
-
-                }
+                default -> System.out.println("Invalid Choice ...!!");
             }
 
 
@@ -168,15 +171,19 @@ public class Main {
         System.out.println("=============================");
         System.out.println(" Patient Management - New Patient : ");
         System.out.println("1 - Enter Data Of Patient  .");
-        System.out.println("2 - Take an Order.");
         System.out.println("0 - Exit .");
         System.out.println("=============================");
     }
 
 
-    public static void patientOperation() {
-        ArrayList<Patient> patients = reception.getPatients();
+    public static void patientOperation() throws Exception {
+        ArrayList<Patient> patients = repository.getAllPatients();
         ArrayList<Integer> ids = new ArrayList<>();
+
+        for (Patient i : patients) {
+            ids.add(Integer.parseInt(i.getId()));
+        }
+
 
         int selectMode;
         do {
@@ -186,32 +193,27 @@ public class Main {
             selectMode = sc.nextInt();
 
             switch (selectMode) {
-                case 1 -> {
-                    patientAlreadyOperation(patients, ids);
-                }
-                case 2 -> {
-                    newPatientOperation(ids);
-                }
+                case 1 -> patientAlreadyOperation(patients, ids);
+                case 2 -> newPatientOperation(ids);
                 case 3 -> {
                     System.out.println("All Patients Has Been Existing :");
                     System.out.println(patients);
+                    System.out.println(ids);
                 }
 
-                default -> {
-                    System.out.println(" Invalid Patient  Status !!");
-                }
+                default -> System.out.println(" Invalid Patient  Status !!");
             }
         } while (selectMode != 0);
 
 
     }
 
-    public static void createGuestData(int guestChoice, ArrayList<Integer> idPatient) {
+    public static void createGuestData(int guestChoice, ArrayList<Integer> idPatient) throws Exception {
 
 
-        System.out.println("Enter Guest Details:");
+        System.out.println("Enter Guest Details: ");
         sc.nextLine();
-        System.out.print("Name: ");
+        System.out.print("Guest Name: ");
         String name = sc.nextLine();
 
         System.out.print("Address: ");
@@ -226,125 +228,152 @@ public class Main {
         idPatient.add(Integer.parseInt(id));
 
 
-        switch (guestChoice) {
+        if (guestChoice == 1) {
+            System.out.print("Disease : ");
+            String disease = sc.nextLine();
+
+            System.out.print("Blood Type : ");
+            String bloodType = sc.nextLine();
+
+            addPatient(name, address, nationality, id, disease, bloodType);
+        } else {
+            System.out.println("InValid Input ...");
+        }
 
 
-            case 1 -> {
-                System.out.print("Disease : ");
-                String disease = sc.nextLine();
+    }
 
-                System.out.print("Blood Type : ");
-                String bloodType = sc.nextLine();
+    public static void addPatient(String name, String address, String nationality, String id, String disease, String bloodType) throws Exception {
+        try {
+            Patient patient = new Patient(name, address, nationality, id, disease, bloodType);
+            reception.addPatient(patient, repository);
+            repository.save();
 
-                addPatient(name, address, nationality, id, disease, bloodType);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
 
-            }
+    public static void addDoctor(String name, String address, String nationality, String id, double salary, int workHours, int experienceYears, Department department) throws Exception {
 
-            default -> {
-                System.out.println("InValid Input ...");
+        try {
+
+            Doctor doctor = new Doctor(name, address, nationality, id, salary, workHours, experienceYears, department);
+            admin.addMedicalStaff(doctor, repository);
+
+            department.addEmployee(doctor);
+            repository.save();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
 
 
-            }
+    }
 
+    public static void addNurse(String name, String address, String nationality, String id, double salary, int workHours, int experienceYears, Department department) throws Exception {
+        try {
 
+            Nurse nurse = new Nurse(name, address, nationality, id, salary, workHours, experienceYears, department);
+            admin.addMedicalStaff(nurse, repository);
+
+            department.addEmployee(nurse);
+            repository.save();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
 
     }
 
-    public static void addPatient(String name, String address, String nationality, String id, String disease, String bloodType) {
-        Patient patient = new Patient(name, address, nationality, id, disease, bloodType);
-        reception.addPatient(patient);
-    }
 
-    public static void addDoctor(String name, String address, String nationality, String id, double salary, int workHours, int experienceYears, Department department) {
-        Doctor doctor = new Doctor(name, address, nationality, id, salary, workHours, experienceYears, department);
-        admin.addMedicalStaff(doctor);
-        doctor.getDepartment().addEmployee(doctor);
-    }
+    public static void createStaffData(int choice, char medicalChoice) throws Exception {
+        try {
+            Department department = null;
+            System.out.println("Enter Staff Details:");
+            sc.nextLine();
+            System.out.print("Name: ");
+            String name;
+            name = sc.nextLine();
 
-    public static void addNurse(String name, String address, String nationality, String id, double salary, int workHours, int experienceYears, Department department) {
-        Nurse nurse = new Nurse(name, address, nationality, id, salary, workHours, experienceYears, department);
-        admin.addMedicalStaff(nurse);
-        nurse.getDepartment().addEmployee(nurse);
-    }
+            System.out.print("Address: ");
+            String address = sc.nextLine();
 
+            System.out.print("Nationality: ");
+            String nationality = sc.nextLine();
 
-    public static void createStaffData(int choice, char medicalChoice) {
-        Department department = null;
-        System.out.println("Enter Staff Details:");
-        sc.nextLine();
-        System.out.print("Name: ");
-        String name = sc.nextLine();
+            System.out.print("ID: ");
+            String id = sc.nextLine();
 
-        System.out.print("Address: ");
-        String address = sc.nextLine();
+            System.out.print("Salary: ");
+            double salary = sc.nextDouble();
 
-        System.out.print("Nationality: ");
-        String nationality = sc.nextLine();
+            System.out.print("Work Hours: ");
+            int workHours = sc.nextInt();
 
-        System.out.print("ID: ");
-        String id = sc.nextLine();
-
-        System.out.print("Salary: ");
-        double salary = sc.nextDouble();
-
-        System.out.print("Work Hours: ");
-        int workHours = sc.nextInt();
-
-        System.out.print("Experience Years: ");
-        int experienceYears = sc.nextInt();
-        sc.nextLine();
-        if (Character.isLetter(medicalChoice)) {
-            department = createDepartment();
-        }
+            System.out.print("Experience Years: ");
+            int experienceYears = sc.nextInt();
+            sc.nextLine();
+            if (Character.isLetter(medicalChoice)) {
+                department = createDepartment();
+            }
 
 
-        switch (choice) {
-            case 1 -> {
-                switch (medicalChoice) {
+            switch (choice) {
+                case 1 -> {
+                    switch (medicalChoice) {
 
-                    case 'A' -> {
-                        addDoctor(name, address, nationality, id, salary, workHours, experienceYears, department);
+                        case 'A' ->
+                                addDoctor(name, address, nationality, id, salary, workHours, experienceYears, department);
+
+                        case 'B' ->
+                                addNurse(name, address, nationality, id, salary, workHours, experienceYears, department);
+                        default -> System.out.println("NO Medical Staff .");
+
                     }
-                    case 'B' -> {
-                        addNurse(name, address, nationality, id, salary, workHours, experienceYears, department);
-                    }
-                    default -> {
-                        System.out.println("NO Medical Staff .");
-                    }
+
 
                 }
+                case 2 -> {
+                    Reception reception = new Reception(name, address, nationality, id, salary, workHours, experienceYears);
+                    admin.addReception(reception, repository);
 
+                    repository.save();
+                }
+                case 3 -> {
+                }
+                default -> System.out.println(" Invalid Staff .");
 
             }
-            case 2 -> {
-                Reception reception = new Reception(name, address, nationality, id, salary, workHours, experienceYears);
-                admin.addReception(reception);
-            }
-            case 3 -> {
-            }
-            default -> {
-                System.out.println(" Invalid Staff .");
-            }
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
 
 
     }
 
 
-    public static Department createDepartment() {
+    public static Department createDepartment() throws Exception {
         System.out.println("Enter Department Details:");
         System.out.print("Name: ");
         String name = sc.nextLine();
+
         return new Department(name);
     }
 
     public static void addDepartment() throws Exception {
-        Department department = createDepartment();
-        admin.addDepartment(department);
+        try {
+            Department department = createDepartment();
+            admin.addDepartment(department, repository);
+            repository.save();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+
     }
 
-    public static void adminOperation() {
+    public static void adminOperation() throws Exception {
+        admin.setListEmployee(repository);
         int adminChoice;
         do {
             adminMenu();
@@ -353,13 +382,24 @@ public class Main {
 
             switch (adminChoice) {
                 case 1 -> {
-                    createStaffData(1, 'A');
-                    System.out.println("Doctor Added Successfully ! ");
+                    try {
+
+                        createStaffData(1, 'A');
+                        System.out.println("Doctor Added Successfully ! ");
+                    } catch (Exception e) {
+                        System.out.println(e.getMessage() + " ");
+                    }
+
                 }
                 case 2 -> {
+                    try {
 
-                    createStaffData(1, 'B');
-                    System.out.println("Nurse Added Successfully ! ");
+                        System.out.println("Nurse Added Successfully ! ");
+                        createStaffData(1, 'B');
+                    } catch (Exception e) {
+                        System.out.println(e.getMessage() + " ");
+
+                    }
                 }
                 case 3 -> {
                     createStaffData(2, ' ');
@@ -376,26 +416,26 @@ public class Main {
 
                 }
                 case 5 -> {
-                    System.out.println("All Medical Staff Were Added : ");
-                    System.out.println(admin.toString());
+                    System.out.println("=== All Medical Staff ===");
+                    ArrayList<Employee> employees = admin.getListEmployee();
+                    System.out.println(employees);
+
                 }
                 case 6 -> {
                     System.out.println("All Departments : ");
-                    ArrayList<Department> showDepartments = admin.knowAllDepartment();
-                    System.out.println(showDepartments);
+
+                    List<Department> departments = repository.getAllDepartments();
+                    System.out.println(departments);
+
 
                 }
-                case 0 -> {
-                    System.out.println("Admin Exiting !!");
-                }
-                default -> {
-                    System.out.println("Invalid Input ⚠︎ . ");
-                }
+                case 0 -> System.out.println("Admin Exiting !!");
+                default -> System.out.println("Invalid Input ⚠︎ . ");
             }
         } while (adminChoice != 0);
     }
 
-    public static void receptionOperation() {
+    public static void receptionOperation() throws Exception {
         int receptionChoice;
 
         do {
@@ -404,51 +444,78 @@ public class Main {
             receptionChoice = sc.nextInt();
 
             switch (receptionChoice) {
-                case 1 -> {
-                    patientOperation();
-                }
+                case 1 -> patientOperation();
 
+                case 0 -> System.out.println("Reception Exiting !!");
 
-                case 0 -> {
-                    System.out.println("Reception Exiting !!");
-                }
-                default -> {
-                    System.out.println("Invalid Input ⚠︎ . ");
-                }
+                default -> System.out.println("Invalid Input ⚠︎ . ");
+
             }
         } while (receptionChoice != 0);
     }
 
 
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        int inputChoice;
+    public static void main(String[] args) throws Exception {
+        final String PATH_FILE = "src/resources/HospitalData.ser";
 
-        do {
-
-            systemMenu();
-            System.out.print("Enter Your Role : ");
-            inputChoice = sc.nextInt();
-            switch (inputChoice) {
-
-                case 1 -> {
-                    adminOperation();
-
-                }
-                case 2 -> {
-                    receptionOperation();
-                }
-                case 3 -> {
-                    System.out.println("System Closing ...");
-                }
-                default -> {
-                    System.out.println("Invalid Input ⚠︎ . ");
-                }
-
-
+        repository = new FileHospitalRepository(PATH_FILE);
+        repository.load();
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            try {
+                repository.save();
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
             }
+        }));
 
-        } while (inputChoice != 3);
+        try {
+            int inputChoice;
+            do {
+
+                systemMenu();
+                System.out.print("Enter Your Role : ");
+                inputChoice = sc.nextInt();
+                switch (inputChoice) {
+
+                    case 1 -> {
+                        try {
+                            if (loginSystemMenu(admin, adminAccountFilePath)) {
+
+                                adminOperation();
+
+                            }
+
+                        } catch (Exception e) {
+                            System.out.println("\n" + e.getMessage());
+                        }
+
+
+                    }
+                    case 2 -> {
+
+                        try {
+                            if (loginSystemMenu(reception, receptionAccountFilePath)) {
+                                receptionOperation();
+
+                            }
+                        } catch (Exception e) {
+                            System.out.println("\n" + e.getMessage());
+                        }
+
+                    }
+                    case 3 -> System.out.println("System Closing ...");
+                    default -> System.out.println("Invalid Input ⚠︎ . ");
+
+
+                }
+
+            } while (inputChoice != 3);
+
+        } catch (InputMismatchException mismatchException) {
+            System.out.println("\n" + "Invalid InputType");
+        } finally {
+            System.out.println("\nSystem Powered by Mohamed El-Gohary !!");
+        }
 
 
     }

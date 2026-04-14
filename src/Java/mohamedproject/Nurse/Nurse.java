@@ -3,14 +3,20 @@ package Java.mohamedproject.Nurse;
 import Java.mohamedproject.Department.Department;
 import Java.mohamedproject.Employee.Employee;
 
-public class Nurse extends Employee {
-    public Nurse(){
+import java.io.Serial;
+import java.io.Serializable;
+
+public class Nurse extends Employee implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 4L;
+    public Nurse() throws Exception {
         super();
         this.department = new Department("!!!");
     }
 
 
-    public  Nurse (String name , String address , String nationality, String id, double salary , int workHours , int experienceYears, Department department){
+    public  Nurse (String name , String address , String nationality, String id, double salary , int workHours , int experienceYears, Department department) throws Exception {
         super(name , address , nationality, id,  salary , workHours , experienceYears );
         this.department = department;
 
@@ -19,9 +25,15 @@ public class Nurse extends Employee {
 
     @Override
     public String toString() {
-        return "Nurse{" +
-                super.toString() +
-                "department=" + department.getDepartmentName() +
+        return "Nurse {" +
+                "  Name = "+ getName() +
+                ", Address = "+ getAddress()+
+                ", Nationality = " + getNationality() +
+                ", id='" + id + '\'' +
+                ", salary=" + salary +
+                ", workHours=" + workHours +
+                ", experienceYears=" + experienceYears +
+                ", department=" + department +
                 '}';
     }
 }

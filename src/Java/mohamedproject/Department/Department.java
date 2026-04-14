@@ -2,10 +2,17 @@ package Java.mohamedproject.Department;
 
 import Java.mohamedproject.Employee.Employee;
 
+
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Department {
+import static Java.mohamedproject.Person.Person.isValidValue;
 
+public class Department implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 7L;
     private String departmentName;
     private ArrayList<Employee>listEmployee = new ArrayList<>();
     private int numberOfEmployees;
@@ -15,9 +22,14 @@ public class Department {
 
     }
 
-    public Department(String departmentName ){
+    public Department(String departmentName )throws Exception{
 
-        this.departmentName = departmentName;
+        if(isValidValue(Departments.class,departmentName)){
+            this.departmentName = departmentName;
+
+        }else {
+            throw new Exception("Invalid Department !! ");
+        }
 
     }
 
@@ -52,9 +64,8 @@ public class Department {
 
     @Override
     public String toString() {
-        return "Java.mohamedproject.Department.Department{" +
+        return "Department{" +
                 "departmentName='" + departmentName + '\'' +
-                ", listEmployee=" + listEmployee +
                 ", numberOfEmployees=" + numberOfEmployees +
                 '}';
     }

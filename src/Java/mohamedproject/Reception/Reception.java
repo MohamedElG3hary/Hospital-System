@@ -1,14 +1,17 @@
 package Java.mohamedproject.Reception;
 
 import Java.mohamedproject.Employee.Employee;
+import Java.mohamedproject.HospitalRepository.HospitalRepository;
 import Java.mohamedproject.Order.Order;
 import Java.mohamedproject.SortValues.SortByValue;
 import Java.mohamedproject.Patient.Patient;
 
+import java.io.Serial;
 import java.util.*;
 
 public class Reception extends Employee {
-
+    @Serial
+    private static final long serialVersionUID = 5L;
     private ArrayList<Patient> patients  = new ArrayList <>();
     private ArrayList<Order> orders  = new ArrayList <>();
 
@@ -19,13 +22,13 @@ public class Reception extends Employee {
 
     }
 
-    public Reception(String name , String address , String nationality, String id , double salary , int workHours , int experienceYears ){
+    public Reception(String name , String address , String nationality, String id , double salary , int workHours , int experienceYears ) throws Exception {
         super(name ,address , nationality, id,  salary , workHours , experienceYears);
 
     }
 
-    public void addPatient(Patient patient){
-        patients.add(patient);
+    public void addPatient(Patient patient , HospitalRepository repository){
+        repository.addPatient(patient);
         numberOfPatients++;
     }
 
