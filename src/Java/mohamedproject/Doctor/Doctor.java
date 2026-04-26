@@ -2,6 +2,8 @@ package Java.mohamedproject.Doctor;
 
 import Java.mohamedproject.Department.Department;
 import Java.mohamedproject.Employee.Employee;
+import Java.mohamedproject.Nationality.Nationality;
+import Java.mohamedproject.Person.PersonCity;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -12,11 +14,11 @@ public class Doctor extends Employee implements Serializable {
 
     public Doctor() throws Exception {
         super();
-        this.department = new Department("!!!");
+        this.department = null;
     }
 
 
-    public  Doctor (String name , String address , String nationality, String id, double salary , int workHours , int experienceYears, Department department) throws Exception {
+    public  Doctor (String name , PersonCity address , Nationality nationality, String id, double salary , int workHours , int experienceYears, Department department) throws Exception {
         super(name , address , nationality, id,  salary , workHours , experienceYears);
         this.department = department;
 

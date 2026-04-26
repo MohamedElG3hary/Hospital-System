@@ -1,6 +1,8 @@
 package Java.mohamedproject.Patient;
 
+import Java.mohamedproject.Nationality.Nationality;
 import Java.mohamedproject.Person.Person;
+import Java.mohamedproject.Person.PersonCity;
 
 import java.util.ArrayList;
 
@@ -19,7 +21,7 @@ public class Patient extends Person {
 
     }
 
-    public Patient(String name, String address, String nationality, String id, String disease, String bloodType) throws Exception {
+    public Patient(String name, PersonCity address, Nationality nationality, String id, String disease, String bloodType) throws Exception {
         super(name, address, nationality, id);
         this.disease = disease;
         this.bloodType = bloodType;

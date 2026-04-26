@@ -34,12 +34,7 @@ public class Administrators extends Employee implements Serializable {
     public void checkDepartment(Employee employee, Department dept, HospitalRepository repository) {
 
 
-        if (dept == null) {
-
-            dept = employee.getDepartment();
-            departments.add(dept);
-            repository.addDepartment(dept);
-        } else {
+        if (dept != null){
             dept.addEmployee(employee);
         }
     }
@@ -55,41 +50,44 @@ public class Administrators extends Employee implements Serializable {
 
             int location = binarySearch(Integer.parseInt(employee.getId()), employeeId, 0, employees.size() - 1);
 
-            if (location != 1) {
+            if (location != -1) {
                 throw new Exception("Entered Id is Repeated !! ");
             }
 
         }
     }
 
-    public void addMedicalStaff(Employee employee, HospitalRepository repository) throws Exception {
-        Department dept = repository.findDepartmentByName(employee.getDepartment().getDepartmentName());
-        checkDepartment(employee, dept, repository);
-        checkId(employee, listEmployee);
-        setListEmployee(repository);
+    public void addMedicalStaff(Employee employee, Department department,HospitalRepository repository) throws Exception {
+
+        try {
+            checkId(employee, listEmployee);
+            Department realDepartment = repository.addDepartment(department.getDepartmentName());
+            realDepartment.addEmployee(employee);
+
+            if (employee instanceof Doctor) {
+                repository.addDoctor((Doctor) employee);
+                numberOfDoctorsAdded++;
+            } else if (employee instanceof Nurse) {
+                repository.addNurse((Nurse) employee);
+                numberOfNursesAdded++;
+            }
+
+            repository.save();
+
+           // setListEmployee(repository);
+
+        }catch (Exception e){
+            System.out.println(e.getMessage()+" ");
+        }
+
         // write admin file in Version 2
-        if (employee instanceof Doctor) {
-            repository.addDoctor((Doctor) employee);
-            numberOfDoctorsAdded++;
-        } else if (employee instanceof Nurse) {
-            repository.addNurse((Nurse) employee);
-            numberOfNursesAdded++;
-        }
+
 
 
     }
 
 
-    public void addDepartment(Department department, HospitalRepository repository) throws Exception {
-        Department dept = repository.findDepartmentByName(department.getDepartmentName());
-        if (dept == null) {
 
-            repository.addDepartment(department);
-        } else {
-            throw new Exception("Department Was Exist !! ");
-        }
-
-    }
 
     public void addReception(Reception reception, HospitalRepository repository) {
         repository.addReception(reception);

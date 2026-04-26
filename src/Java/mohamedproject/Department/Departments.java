@@ -2,17 +2,25 @@ package Java.mohamedproject.Department;
 
 public enum Departments {
 
-    ER,
-    CAR,
-    PED,
-    ORT,
-    DER,
-    NEU,
-    ONC,
-    ENT,
-    OPH,
-    GAS
-
-
+    EMERGENCY_ROOM,
+    CARDIOLOGY,
+    PEDIATRICS,
+    ORTHOPEDICS,
+    DERMATOLOGY,
+    NEUROLOGY,
+    ONCOLOGY,
+    EAR_NOSE_THROAT,
+    OPHTHALMOLOGY,
+    GASTROENTEROLOGY,
+    GENERAL_SURGERY,
+    INTERNAL_MEDICINE,
+    UROLOGY,
+    GYNECOLOGY,
+    RADIOLOGY,
+    ANESTHESIOLOGY,
+    PSYCHIATRY,
+    PHYSIOTHERAPY,
+    INTENSIVE_CARE_UNIT,
+    LABORATORY
 
 }

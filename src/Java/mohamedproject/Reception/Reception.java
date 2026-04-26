@@ -2,7 +2,9 @@ package Java.mohamedproject.Reception;
 
 import Java.mohamedproject.Employee.Employee;
 import Java.mohamedproject.HospitalRepository.HospitalRepository;
+import Java.mohamedproject.Nationality.Nationality;
 import Java.mohamedproject.Order.Order;
+import Java.mohamedproject.Person.PersonCity;
 import Java.mohamedproject.SortValues.SortByValue;
 import Java.mohamedproject.Patient.Patient;
 
@@ -22,7 +24,7 @@ public class Reception extends Employee {
 
     }
 
-    public Reception(String name , String address , String nationality, String id , double salary , int workHours , int experienceYears ) throws Exception {
+    public Reception(String name , PersonCity address , Nationality nationality, String id , double salary , int workHours , int experienceYears ) throws Exception {
         super(name ,address , nationality, id,  salary , workHours , experienceYears);
 
     }

@@ -278,6 +278,7 @@ Department *- Employee
 Order *- Patient
 Department -- Administrators
 Reception o-- Patient
+Administrators -- Doctor
 
 
 

@@ -1,4 +1,5 @@
 package Java.mohamedproject.HospitalRepository;
+import Java.mohamedproject.Department.Departments;
 import Java.mohamedproject.Doctor.Doctor;
 import Java.mohamedproject.Nurse.Nurse;
 import Java.mohamedproject.Reception.Reception;
@@ -17,9 +18,9 @@ public interface HospitalRepository  {
     void addReception(Reception reception);
     ArrayList<Reception> getAllReceptions();
 
-    void addDepartment(Department department);
+    Department addDepartment(Departments departmentName);
     ArrayList<Department> getAllDepartments();
-    Department findDepartmentByName(String name);
+
 
     void addPatient(Patient patient);
     ArrayList<Patient> getAllPatients();

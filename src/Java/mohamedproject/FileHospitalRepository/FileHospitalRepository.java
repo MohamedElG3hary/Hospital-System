@@ -1,4 +1,5 @@
 package Java.mohamedproject.FileHospitalRepository;
+import Java.mohamedproject.Department.Departments;
 import Java.mohamedproject.Doctor.Doctor;
 import Java.mohamedproject.HospitalRepository.HospitalRepository;
 import Java.mohamedproject.Nurse.Nurse;
@@ -60,8 +61,17 @@ public class FileHospitalRepository implements HospitalRepository, Serializable 
     }
 
     @Override
-    public void addDepartment(Department department) {
-        departments.add(department);
+    public Department addDepartment(Departments departmentName) {
+        for (Department d : departments) {
+            if (d.getDepartmentName().equals(departmentName)) {
+                return d;
+            }
+        }
+
+        Department newDepartment = new Department(departmentName);
+        departments.add(newDepartment);
+
+        return newDepartment;
     }
 
     @Override
@@ -69,15 +79,7 @@ public class FileHospitalRepository implements HospitalRepository, Serializable 
         return new ArrayList<>(departments);
     }
 
-    @Override
-    public Department findDepartmentByName(String name) {
-        for (Department d : departments) {
-            if (d.getDepartmentName().equalsIgnoreCase(name)) {
-                return d;
-            }
-        }
-        return null;
-    }
+
 
     @Override
     public void addPatient(Patient patient) {

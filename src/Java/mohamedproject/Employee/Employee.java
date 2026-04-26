@@ -1,10 +1,13 @@
 package Java.mohamedproject.Employee;
 
 import Java.mohamedproject.Department.Department;
+import Java.mohamedproject.Nationality.Nationality;
 import Java.mohamedproject.Person.Person;
+import Java.mohamedproject.Person.PersonCity;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.InputMismatchException;
 
 public abstract class Employee extends Person implements Serializable {
 
@@ -23,11 +26,16 @@ public abstract class Employee extends Person implements Serializable {
         this.experienceYears = 0;
         this.password = "";
     }
-    public  Employee (String name , String address , String nationality, String id , double salary , int workHours , int experienceYears ) throws Exception {
+    public  Employee (String name , PersonCity address , Nationality nationality, String id , double salary , int workHours , int experienceYears ) throws Exception {
         super(name , address,nationality,id);
-        this.salary = salary;
-        this.workHours = workHours;
-        this.experienceYears = experienceYears;
+        try {
+
+            this.salary = salary;
+            this.workHours = workHours;
+            this.experienceYears = experienceYears;
+        }catch (InputMismatchException e){
+            System.out.println("Invalid Data !!");
+        }
 
 
     }
