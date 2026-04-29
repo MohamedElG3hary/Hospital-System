@@ -1,4 +1,4 @@
-package Java.mohamedproject.Admin;
+package Java.mohamedproject.Classes;
 
 import Java.mohamedproject.Department.Department;
 import Java.mohamedproject.Doctor.Doctor;

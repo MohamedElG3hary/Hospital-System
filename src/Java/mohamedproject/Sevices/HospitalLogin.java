@@ -14,7 +14,7 @@ import static Java.mohamedproject.Main.sc;
 public class HospitalLogin {
 
 
-    public static boolean verifyUserLogin(Employee user, String filePath, String delimiter) {
+    public static boolean verifyUserLogin(User user, String filePath, String delimiter) {
         String currentLine;
         String data[];
 
@@ -24,7 +24,8 @@ public class HospitalLogin {
 
             while ((currentLine = br.readLine()) != null) {
                 data = currentLine.trim().split(delimiter);
-                if (data[0].trim().equals(user.getName().trim()) && data[1].trim().equals(user.getPassword().trim())) {
+                if (data[0].trim().equals(user.getUserName().trim()) && data[1].trim().equals(user.getHashPassword().trim())) {
+                    user.setActive(true);
                     return true;
                 }
             }
@@ -37,20 +38,20 @@ public class HospitalLogin {
     }
 
 
-    public static boolean loginSystemMenu(Employee user , String filePath)throws Exception {
+    public static boolean loginSystemMenu(User user, String filePath) throws Exception {
         System.out.println("=============================");
         System.out.print("Enter Your Username : ");
         sc.nextLine();
         String userName = sc.nextLine();
-        user.setName(userName.trim());
+        user.setUserName(userName.trim());
         System.out.print("Enter Your Password : ");
 
         String password = sc.nextLine();
-        if(password.trim().length()!=8){
+        if (password.trim().length() != 8) {
             throw new Exception("Password Must be 8 Character ");
-        }else {
+        } else {
 
-            user.setPassword(password.trim());
+            user.setHashPassword(password.trim());
         }
         System.out.print("=============================");
 
@@ -58,6 +59,16 @@ public class HospitalLogin {
             return true;
         }
         throw new Exception("Error in Entered Fields ..");
+    }
+
+    public static boolean logOut(User user) {
+        user.setUserName(null);
+        user.setHashPassword(null);
+        user.setActive(false);
+
+        return user.isActive();
+
+
     }
 
 

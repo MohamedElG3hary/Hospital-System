@@ -4,6 +4,7 @@ import Java.mohamedproject.Department.Department;
 import Java.mohamedproject.Nationality.Nationality;
 import Java.mohamedproject.Person.Person;
 import Java.mohamedproject.Person.PersonCity;
+import LoginService.User;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -17,14 +18,12 @@ public abstract class Employee extends Person implements Serializable {
     protected double salary ;
     protected int workHours;
     protected int experienceYears;
-    private String password;
-
+    protected User user = new User();
     public Employee(){
         super();
         this.salary = 0.0;
         this.workHours = 0;
         this.experienceYears = 0;
-        this.password = "";
     }
     public  Employee (String name , PersonCity address , Nationality nationality, String id , double salary , int workHours , int experienceYears ) throws Exception {
         super(name , address,nationality,id);
@@ -38,12 +37,6 @@ public abstract class Employee extends Person implements Serializable {
         }
 
 
-    }
-    public void setPassword(String password) {
-        this.password = password;
-    }
-    public String getPassword() {
-        return password;
     }
 
     public double getSalary() {
@@ -60,6 +53,10 @@ public abstract class Employee extends Person implements Serializable {
 
     public Department getDepartment() {
         return department;
+    }
+
+    public User getUser() {
+        return user;
     }
 
     @Override

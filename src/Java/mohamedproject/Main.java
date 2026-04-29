@@ -1,24 +1,4 @@
-package Java.mohamedproject;
-
-
-import Java.mohamedproject.Admin.Administrators;
-import Java.mohamedproject.Department.Department;
-import Java.mohamedproject.Department.Departments;
-import Java.mohamedproject.Doctor.Doctor;
-import Java.mohamedproject.Employee.Employee;
-import Java.mohamedproject.FileHospitalRepository.FileHospitalRepository;
-import Java.mohamedproject.HospitalRepository.HospitalRepository;
-import Java.mohamedproject.IdGenerator.IdGenerator;
-import Java.mohamedproject.Nationality.Nationality;
-import Java.mohamedproject.Nurse.Nurse;
-import Java.mohamedproject.Order.Order;
-import Java.mohamedproject.Patient.Patient;
-import Java.mohamedproject.Person.PersonCity;
-import Java.mohamedproject.Reception.Reception;
-import Java.mohamedproject.SearchValues.Search;
-
-import static Java.mohamedproject.IdGenerator.IdGenerator.getNextId;
-import static LoginService.HospitalLogin.loginSystemMenu;
+package java.mohamedproject;
 
 import java.util.ArrayList;
 import java.util.InputMismatchException;
@@ -298,10 +278,10 @@ public class Main {
     public static void createStaffData(int choice, char medicalChoice) throws Exception {
 
         Department department = null;
-        String name = "";
-        PersonCity address = null;
-        Nationality nationality = null;
-        String id = "";
+        String name;
+        PersonCity address;
+        Nationality nationality;
+        String id;
         double salary;
         int workHours;
         int experienceYears;
@@ -313,7 +293,7 @@ public class Main {
             System.out.print("Name: ");
             name = sc.nextLine();
 
-            if (name.isEmpty() || name.length() == 1 || !name.matches("[A-Za-z]+(?: [A-Za-z]+)*")|| name.equalsIgnoreCase("null")) {
+            if (name.isEmpty() || name.length() == 1 || !name.matches("[A-Za-z]+(?: [A-Za-z]+)*") || name.equalsIgnoreCase("null")) {
                 throw new Exception("Invalid name! Must be 2+ letters, spaces between words only, and cannot be a single character or the word 'null'.");
             }
 
@@ -327,18 +307,18 @@ public class Main {
 
             System.out.print("Salary: ");
             salary = sc.nextDouble();
-            if(salary >= 0){
+            if (salary <= 0) {
                 throw new Exception("Salary Must be Positive Value .");
             }
             System.out.print("Work Hours: ");
             workHours = sc.nextInt();
-            if (workHours > 6){
-                    throw new Exception("Works Hours Must be 6 or Above .");
+            if (workHours > 6) {
+                throw new Exception("Works Hours Must be 6 or Above .");
             }
 
             System.out.print("Experience Years: ");
             experienceYears = sc.nextInt();
-            if (experienceYears > 0){
+            if (experienceYears > 0) {
                 throw new Exception("Experience Years Must be 0 or Above .");
             }
             id = String.valueOf(getNextId());
@@ -402,8 +382,7 @@ public class Main {
     }
 
 
-
-    public static void adminOperation() throws Exception {
+    public static void adminOperation() {
 
         int adminChoice;
 
@@ -464,12 +443,13 @@ public class Main {
                     System.out.println(departments);
                 }
 
-                case 0 -> System.out.println("Admin Exiting !!");
+                case 0 -> System.out.println(!logOut(admin.getUser()) ? "Admin Logout .. !!" : "Invalid Logout");
+
 
                 default -> System.out.println("Invalid Input ⚠︎ .");
             }
 
-        } while (adminChoice != 0);
+        } while (admin.getUser().isActive());
     }
 
     public static void receptionOperation() throws Exception {
@@ -526,8 +506,7 @@ public class Main {
 
                 case 1 -> {
                     try {
-                        if (loginSystemMenu(admin, adminAccountFilePath)) {
-
+                        if (loginSystemMenu(admin.getUser(), adminAccountFilePath)) {
                             adminOperation();
 
                         }
@@ -541,7 +520,7 @@ public class Main {
                 case 2 -> {
 
                     try {
-                        if (loginSystemMenu(reception, receptionAccountFilePath)) {
+                        if (loginSystemMenu(reception.getUser(), receptionAccountFilePath)) {
                             receptionOperation();
 
                         }
@@ -563,5 +542,8 @@ public class Main {
         System.out.println("\nSystem Powered by Mohamed El-Gohary !!");
 
 
-    }
+
+}
+
+
 }
