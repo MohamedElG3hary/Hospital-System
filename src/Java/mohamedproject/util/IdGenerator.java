@@ -1,4 +1,4 @@
-package Java.mohamedproject.IdGenerator;
+package Java.mohamedproject.util;
 
 import java.io.*;
 

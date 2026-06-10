@@ -1,4 +1,4 @@
-package Java.mohamedproject.Person;
+package Java.mohamedproject.Enums;
 
 public enum PersonCity {
 

@@ -1,15 +1,9 @@
-package LoginService;
-
-import Java.mohamedproject.Employee.Employee;
-import Java.mohamedproject.HospitalRepository.HospitalRepository;
-import Java.mohamedproject.Person.Person;
+package Java.mohamedproject.Services;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
-import java.util.ArrayList;
-
-import static Java.mohamedproject.Main.adminAccountFilePath;
-import static Java.mohamedproject.Main.sc;
+import Java.mohamedproject.Entity.User;
+import java.util.Scanner;
 
 public class HospitalLogin {
 
@@ -38,7 +32,7 @@ public class HospitalLogin {
     }
 
 
-    public static boolean loginSystemMenu(User user, String filePath) throws Exception {
+    public static boolean loginSystemMenu(User user, String filePath , Scanner sc) throws Exception {
         System.out.println("=============================");
         System.out.print("Enter Your Username : ");
         sc.nextLine();

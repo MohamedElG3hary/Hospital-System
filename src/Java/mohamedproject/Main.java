@@ -1,9 +1,18 @@
-package java.mohamedproject;
+package Java.mohamedproject;
 
-import java.util.ArrayList;
-import java.util.InputMismatchException;
-import java.util.List;
-import java.util.Scanner;
+
+import Java.mohamedproject.Console.Implementation.ConsoleApplication;
+import Java.mohamedproject.Entity.*;
+import Java.mohamedproject.Enums.Departments;
+import Java.mohamedproject.Enums.Nationality;
+import Java.mohamedproject.Enums.PersonCity;
+import Java.mohamedproject.Repository.Interfaces.HospitalRepository;
+
+import java.util.*;
+
+import static Java.mohamedproject.Services.HospitalLogin.logOut;
+import static Java.mohamedproject.util.IdGenerator.getNextId;
+import static Java.mohamedproject.util.Search.binarySearch;
 
 
 public class Main {
@@ -20,36 +29,8 @@ public class Main {
     public static String receptionAccountFilePath = "src/resources/receptionAccounts.txt";
 
 
-    public static void systemMenu() {
-        System.out.println("=============================");
-        System.out.println("Hello To Hospital System : ");
-        System.out.println("1 - Sign in As Admin .");
-        System.out.println("2 - Sign in As Reception .");
-        System.out.println("3 - Exit .");
-        System.out.println("=============================");
-    }
 
-    public static void adminMenu() {
-        System.out.println("=============================");
-        System.out.println("Hello To Admin Role : ");
-        System.out.println("1 - Add Doctor .");
-        System.out.println("2 - Add Nurse .");
-        System.out.println("3 - Add Reception .");
-        System.out.println("4 - Add Department .");
-        System.out.println("5 - Know all Employees .");
-        System.out.println("6 - Know all Departments .");
-        System.out.println("0 - Exit .");
-        System.out.println("=============================");
-    }
-
-    public static void receptionMenu() {
-        System.out.println("=============================");
-        System.out.println("Hello To Reception Role : ");
-        System.out.println("1 - Patient Management .");
-        System.out.println("0 - Exit .");
-        System.out.println("=============================");
-    }
-
+/*
     public static void patientManagement() {
         System.out.println("=============================");
         System.out.println("--- Patient Management : ---");
@@ -70,20 +51,7 @@ public class Main {
         System.out.println("=============================");
     }
 
-    public static <T extends Enum<T>> T chooseEnum(Class<T> enumType) {
 
-        T[] options = enumType.getEnumConstants();
-
-        for (int i = 0; i < options.length; i++) {
-            System.out.println((i + 1) + " - " + options[i]);
-        }
-
-        System.out.print("Enter your choice: ");
-        int choice = sc.nextInt();
-
-        return options[choice - 1];
-
-    }
 
 
     public static void patientAlreadyOperation(ArrayList<Patient> patients, ArrayList<Integer> ids) throws Exception {
@@ -104,7 +72,7 @@ public class Main {
                     } else {
 
 
-                        int location = Search.binarySearch(id, ids, 0, patients.size() - 1);
+                        int location = binarySearch(id, ids, 0, patients.size() - 1);
                         if (location != -1) {
                             System.out.println("Your Patient is " + patients.get(location).toString());
                         } else {
@@ -121,7 +89,7 @@ public class Main {
                     int order = sc.nextInt();
 
 
-                    int location = Search.binarySearch(id, ids, 0, patients.size() - 1);
+                    int location = binarySearch(id, ids, 0, patients.size() - 1);
                     if (location != -1) {
                         Order obj = new Order(order, patients.get(location));
                         reception.addOrderedPatient(obj);
@@ -209,6 +177,7 @@ public class Main {
 
     }
 
+
     public static void createGuestData(int guestChoice, ArrayList<Integer> idPatient) throws Exception {
 
         System.out.println("Enter Guest Details:");
@@ -249,6 +218,7 @@ public class Main {
         }
     }
 
+
     public static void addPatient(String name, PersonCity address, Nationality nationality, String id, String disease, String bloodType) throws Exception {
 
         Patient patient = new Patient(name, address, nationality, id, disease, bloodType);
@@ -257,7 +227,8 @@ public class Main {
 
 
     }
-
+*/
+    /*
     public static void addDoctor(String name, PersonCity address, Nationality nationality, String id, double salary, int workHours, int experienceYears, Department department) throws Exception {
 
 
@@ -265,7 +236,8 @@ public class Main {
         admin.addMedicalStaff(doctor, department, repository);
 
     }
-
+*/
+    /*
     public static void addNurse(String name, PersonCity address, Nationality nationality, String id, double salary, int workHours, int experienceYears, Department department) throws Exception {
 
 
@@ -273,8 +245,10 @@ public class Main {
         admin.addMedicalStaff(nurse, department, repository);
 
     }
+*/
 
 
+/*
     public static void createStaffData(int choice, char medicalChoice) throws Exception {
 
         Department department = null;
@@ -451,7 +425,9 @@ public class Main {
 
         } while (admin.getUser().isActive());
     }
+*/
 
+/*
     public static void receptionOperation() throws Exception {
         int receptionChoice;
 
@@ -471,75 +447,83 @@ public class Main {
         } while (receptionChoice != 0);
     }
 
-
+*/
     public static void main(String[] args) throws Exception {
-        final String PATH_FILE = "src/resources/HospitalData.ser";
+//        final String PATH_FILE = "src/resources/HospitalData.ser";
+//
+//        repository = new FileHospitalRepository(PATH_FILE);
+//        repository.load();
+//        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+//            try {
+//                repository.save();
+//            } catch (Exception e) {
+//                System.out.println(e.getMessage());
+//            }
+//        }));
+//
+//
+//        int inputChoice = -1;
+//        do {
+//
+//            systemMenu();
+//            System.out.print("Enter Your Role : ");
+//
+//            try {
+//
+//                inputChoice = sc.nextInt();
+//            } catch (InputMismatchException e) {
+//                System.out.println("Invalid input! Please enter a number (1, 2, or 3). ");
+//                sc.next();
+//                continue;
+//            }
+//
+//
+//            switch (inputChoice) {
+//
+//                case 1 -> {
+//                    try {
+//                        if (loginSystemMenu(admin.getUser(), adminAccountFilePath,sc)) {
+//                            adminOperation();
+//
+//                        }
+//
+//                    } catch (Exception e) {
+//                        System.out.println("\n" + e.getMessage());
+//                    }
+//
+//
+//                }
+//                case 2 -> {
+//
+//                    try {
+//                        if (loginSystemMenu(reception.getUser(), receptionAccountFilePath, sc)) {
+//                            receptionOperation();
+//
+//                        }
+//                    } catch (Exception e) {
+//                        System.out.println("\n" + e.getMessage());
+//                    }
+//
+//                }
+//                case 3 -> System.out.println("System Closing ...");
+//                default -> System.out.println("Invalid Input ⚠︎ . ");
+//
+//
+//            }
+//
+//
+//        } while (inputChoice != 3);
+//
+//
+//        System.out.println("\nSystem Powered by Mohamed El-Gohary !!");
+//
 
-        repository = new FileHospitalRepository(PATH_FILE);
-        repository.load();
-        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-            try {
-                repository.save();
-            } catch (Exception e) {
-                System.out.println(e.getMessage());
-            }
-        }));
+
+        ConsoleApplication application = new ConsoleApplication();
+        application.run();
 
 
-        int inputChoice = -1;
-        do {
 
-            systemMenu();
-            System.out.print("Enter Your Role : ");
-
-            try {
-
-                inputChoice = sc.nextInt();
-            } catch (InputMismatchException e) {
-                System.out.println("Invalid input! Please enter a number (1, 2, or 3). ");
-                sc.next();
-                continue;
-            }
-
-
-            switch (inputChoice) {
-
-                case 1 -> {
-                    try {
-                        if (loginSystemMenu(admin.getUser(), adminAccountFilePath)) {
-                            adminOperation();
-
-                        }
-
-                    } catch (Exception e) {
-                        System.out.println("\n" + e.getMessage());
-                    }
-
-
-                }
-                case 2 -> {
-
-                    try {
-                        if (loginSystemMenu(reception.getUser(), receptionAccountFilePath)) {
-                            receptionOperation();
-
-                        }
-                    } catch (Exception e) {
-                        System.out.println("\n" + e.getMessage());
-                    }
-
-                }
-                case 3 -> System.out.println("System Closing ...");
-                default -> System.out.println("Invalid Input ⚠︎ . ");
-
-
-            }
-
-
-        } while (inputChoice != 3);
-
-
-        System.out.println("\nSystem Powered by Mohamed El-Gohary !!");
 
 
 

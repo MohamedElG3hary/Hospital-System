@@ -1,9 +1,10 @@
-package Java.mohamedproject.Person;
+package Java.mohamedproject.Entity;
 
-import Java.mohamedproject.Nationality.Nationality;
+import Java.mohamedproject.Enums.Nationality;
 
 import java.io.Serial;
 import java.io.Serializable;
+import Java.mohamedproject.Enums.PersonCity;
 
 public abstract class Person implements Serializable {
 
@@ -41,12 +42,12 @@ public abstract class Person implements Serializable {
         return name;
     }
 
-    public PersonCity getAddress() {
-        return address;
+    public String getAddress() {
+        return address.name();
     }
 
-    public Nationality getNationality() {
-        return nationality;
+    public String getNationality() {
+        return nationality.name();
     }
 
     public String getId() {

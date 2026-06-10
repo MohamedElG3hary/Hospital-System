@@ -1,31 +1,34 @@
-package Java.mohamedproject;
+package Java.mohamedproject.util;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class DataBaseConnection {
+public class DatabaseConnection {
 
 
-    private static DataBaseConnection instance;
+    private static DatabaseConnection instance;
     private Connection connection;
     private final String url = "jdbc:sqlserver://localhost:1433;databaseName=Hospital_System;encrypt=true;trustServerCertificate=true";
-
     private final String user = "sa";
     private final String password = "123";
 
 
-    private DataBaseConnection(){
+    private DatabaseConnection()throws SQLException{
         try {
+
             this.connection = DriverManager.getConnection(url, user, password);
         } catch (SQLException e) {
             throw new RuntimeException("Error connecting to the database", e);
         }
     }
 
-    public static DataBaseConnection getInstance() {
+
+
+
+    public static DatabaseConnection getInstance() throws SQLException{
         if (instance == null) {
-            instance = new DataBaseConnection();
+            instance = new DatabaseConnection();
         }
         return instance;
     }

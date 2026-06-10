@@ -1,6 +1,5 @@
-package Java.mohamedproject.Order;
+package Java.mohamedproject.Entity;
 
-import Java.mohamedproject.Patient.Patient;
 
 import java.io.Serial;
 import java.io.Serializable;

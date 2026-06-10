@@ -1,7 +1,9 @@
-package Java.mohamedproject.Department;
+package Java.mohamedproject.Enums;
 
 public enum Departments {
 
+    ADMINISTRATION,
+    RECEPTION,
     EMERGENCY_ROOM,
     CARDIOLOGY,
     PEDIATRICS,

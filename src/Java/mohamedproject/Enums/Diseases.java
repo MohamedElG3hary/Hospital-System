@@ -1,0 +1,35 @@
+package Java.mohamedproject.Enums;
+
+public enum Diseases {
+    FLU,
+    COLD,
+    FEVER,
+    COUGH,
+    HEADACHE,
+    MIGRAINE,
+    DIABETES,
+    HYPERTENSION,
+    ASTHMA,
+    BRONCHITIS,
+    PNEUMONIA,
+    HEART_DISEASE,
+    ANEMIA,
+    ALLERGY,
+    SINUSITIS,
+    TONSILLITIS,
+    GASTRITIS,
+    FOOD_POISONING,
+    KIDNEY_STONES,
+    URINARY_TRACT_INFECTION,
+    BACK_PAIN,
+    FRACTURE,
+    BURN,
+    SKIN_INFECTION,
+    EYE_INFECTION,
+    EAR_INFECTION,
+    DEHYDRATION,
+    APPENDICITIS,
+    COVID_19,
+    OTHER
+
+}

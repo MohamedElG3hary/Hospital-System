@@ -1,9 +1,8 @@
-package Java.mohamedproject.Patient;
+package Java.mohamedproject.Entity;
 
-import Java.mohamedproject.Nationality.Nationality;
-import Java.mohamedproject.Person.Person;
-import Java.mohamedproject.Person.PersonCity;
+import Java.mohamedproject.Enums.Nationality;
 
+import Java.mohamedproject.Enums.PersonCity;
 import java.util.ArrayList;
 
 public class Patient extends Person {

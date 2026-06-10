@@ -1,12 +1,11 @@
-package Java.mohamedproject.Doctor;
+package Java.mohamedproject.Entity;
 
-import Java.mohamedproject.Department.Department;
-import Java.mohamedproject.Employee.Employee;
-import Java.mohamedproject.Nationality.Nationality;
-import Java.mohamedproject.Person.PersonCity;
+
 
 import java.io.Serial;
 import java.io.Serializable;
+import Java.mohamedproject.Enums.Nationality;
+import Java.mohamedproject.Enums.PersonCity;
 
 public class Doctor extends Employee implements Serializable {
     @Serial
@@ -19,8 +18,8 @@ public class Doctor extends Employee implements Serializable {
 
 
     public  Doctor (String name , PersonCity address , Nationality nationality, String id, double salary , int workHours , int experienceYears, Department department) throws Exception {
-        super(name , address , nationality, id,  salary , workHours , experienceYears);
-        this.department = department;
+        super(name , address , nationality, id,  salary , workHours , experienceYears , department);
+
 
     }
 

@@ -1,7 +1,8 @@
-package Java.mohamedproject.SortValues;
+package Java.mohamedproject.util;
 
-import Java.mohamedproject.Order.Order;
 
+
+import Java.mohamedproject.Entity.Order;
 import java.util.Comparator;
 
 public class SortByValue implements Comparator<Order> {

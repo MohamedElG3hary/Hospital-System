@@ -1,14 +1,11 @@
-package Java.mohamedproject.HospitalRepository;
-import Java.mohamedproject.Department.Departments;
-import Java.mohamedproject.Doctor.Doctor;
-import Java.mohamedproject.Nurse.Nurse;
-import Java.mohamedproject.Reception.Reception;
-import Java.mohamedproject.Department.Department;
-import Java.mohamedproject.Patient.Patient;
+package Java.mohamedproject.Repository.Interfaces;
 
+import Java.mohamedproject.Entity.*;
+import Java.mohamedproject.Enums.*;
 import java.util.ArrayList;
 
 public interface HospitalRepository  {
+
     void addDoctor(Doctor doctor);
     ArrayList<Doctor> getAllDoctors();
 

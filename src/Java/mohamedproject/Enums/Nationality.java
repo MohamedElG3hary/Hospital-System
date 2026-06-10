@@ -1,4 +1,4 @@
-package Java.mohamedproject.Nationality;
+package Java.mohamedproject.Enums;
 
 public enum Nationality {
     EGYPT,

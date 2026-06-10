@@ -2,52 +2,102 @@
 
 
 enum Departments {
-    ER,
-    CAR,
-    PED,
-    ORT,
-    DER,
-    NEU,
-    ONC,
-    ENT,
-    OPH,
-    GAS
+    EMERGENCY_ROOM,
+        CARDIOLOGY,
+        PEDIATRICS,
+        ORTHOPEDICS,
+        DERMATOLOGY,
+        NEUROLOGY,
+        ONCOLOGY,
+        EAR_NOSE_THROAT,
+        OPHTHALMOLOGY,
+        GASTROENTEROLOGY,
+        GENERAL_SURGERY,
+        INTERNAL_MEDICINE,
+        UROLOGY,
+        GYNECOLOGY,
+        RADIOLOGY,
+        ANESTHESIOLOGY,
+        PSYCHIATRY,
+        PHYSIOTHERAPY,
+        INTENSIVE_CARE_UNIT,
+        LABORATORY
 
 
 }
 
 enum Nationality {
-    EG,
-    US,
-    FR,
-    DE,
-    UK,
-    CA,
-    AU,
-    IN,
-    JP,
-    BR;
+    EGYPT,
+        UNITED_STATES,
+        FRANCE,
+        GERMANY,
+        UNITED_KINGDOM,
+        CANADA,
+        AUSTRALIA,
+        INDIA,
+        JAPAN,
+        BRAZIL,
+        SAUDI_ARABIA,
+        UNITED_ARAB_EMIRATES,
+        QATAR,
+        KUWAIT,
+        OMAN,
+        BAHRAIN,
+        TURKEY,
+        ITALY,
+        SPAIN,
+        NETHERLANDS,
+        SWEDEN,
+        NORWAY,
+        SWITZERLAND,
+        CHINA,
+        SOUTH_KOREA,
+        RUSSIA,
+        MEXICO,
+        ARGENTINA,
+        SOUTH_AFRICA,
+        NEW_ZEALAND
 
 }
  enum PersonCity {
     CAIRO,
-    ALEXA,
-    PARIS,
-    LONDO,
-    NEWYO,
-    TOKYO,
-    BERLI,
-    MADRI,
-    OTTAW,
-    CANBR;
+        ALEXANDRIA,
+        PARIS,
+        LONDON,
+        NEW_YORK,
+        TOKYO,
+        BERLIN,
+        MADRID,
+        OTTAWA,
+        CANBERRA,
+        DUBAI,
+        RIYADH,
+        JEDDAH,
+        ABU_DHABI,
+        DOHA,
+        KUWAIT_CITY,
+        AMMAN,
+        BEIRUT,
+        ISTANBUL,
+        ROME,
+        BARCELONA,
+        MOSCOW,
+        BEIJING,
+        SEOUL,
+        SINGAPORE,
+        LOS_ANGELES,
+        CHICAGO,
+        TORONTO,
+        SYDNEY,
+        MELBOURNE
 
 }
 
  abstract class  Person  implements Serializable {
-    - String name;
-    - String address;
-    - String nationality;
-    - String id;
+    # String name;
+    # PersonCity address;
+    # Nationality nationality;
+    # String id;
 
     + Person()
     + Person(String name , String address , String nationality, String id)
@@ -70,8 +120,7 @@ enum Nationality {
     # double salary ;
     # int workHours;
     # int experienceYears;
-    - String password;
-
+    # User user
     + Employee()
     +  Employee (String name , String address , String nationality, String id , double salary , int workHours , int experienceYears )
      + void setPassword(String password)
@@ -99,17 +148,43 @@ enum Nationality {
     + String toString()
 }
 
+class User {
+
+    - String userName;
+    - String hashPassword;
+    - String role;
+    - boolean isActive;
+
+    + User()
+
+    + void setUserName(String userName)
+
+    + void setHashPassword(String hashPassword)
+
+    + void setActive(boolean active)
+
+    + void setRole(String role)
+
+    + String getUserName()
+
+    + String getHashPassword()
+
+    + boolean isActive()
+
+    + String getRole()
+}
+
 
 
  class Department implements Serializable {
 
-    - String departmentName;
+    - Departments departmentName;
     - ArrayList<Employee>listEmployee = new ArrayList<>();
     - int numberOfEmployees;
 
     + Department()
 
-    + Department(String departmentName )
+    + Department(Departments departmentName )
 
     + void addEmployee(Employee employee)
 
@@ -130,9 +205,6 @@ enum Nationality {
 
  class Administrators  extends Employee  implements Serializable {
 
-    - Department department;
-    - Doctor doctor;
-    - Nurse nurse;
     - int numberOfDoctorsAdded;
     - int numberOfNursesAdded;
     - ArrayList<Department> departments = new ArrayList<>();
@@ -266,6 +338,7 @@ class Patient extends Person  implements Serializable {
 
     + static boolean loginSystemMenu(Employee user , String filePath)throws Exception
 
+       + static boolean logOut(User user)
 
 }
 

@@ -1,11 +1,10 @@
-package Java.mohamedproject.Department;
+package Java.mohamedproject.Entity;
 
-import Java.mohamedproject.Employee.Employee;
-import Java.mohamedproject.Nationality.Nationality;
 
 
 import java.io.Serial;
 import java.io.Serializable;
+import Java.mohamedproject.Enums.Departments;
 import java.util.ArrayList;
 
 
@@ -24,8 +23,8 @@ public class Department implements Serializable {
         listEmployee.add(employee);
     }
 
-    public Departments getDepartmentName() {
-        return departmentName;
+    public String getDepartmentName() {
+        return departmentName.name();
     }
 
     public ArrayList<Employee> getListEmployee() {
